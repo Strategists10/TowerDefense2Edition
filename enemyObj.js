@@ -1,3 +1,4 @@
+
 function globalEnemy(speed, hp, armor, path, money){
 	this.alive = true;
 	this.x = startPoint1[0];
@@ -40,7 +41,7 @@ function globalEnemy(speed, hp, armor, path, money){
 
 	this.walk = function(){
 		while(this.pathNode != 11){
-			enemyPosition = createVector(this.x, this.y);
+			var enemyPosition = createVector(this.x, this.y);
 			var dir = enemyPosition.copy();
 			if(enemyPosition.dist(path1[this.pathNode]) < this.speed){
 				var left = enemyPosition.dist(path1[this.pathNode]);

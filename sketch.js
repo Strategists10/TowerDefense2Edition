@@ -117,10 +117,13 @@ function path22(){
 	path2[10] = createVector(4.5 * 46, 0.5 * 46);
 }
 
+
 function setup(){
 	createCanvas(1182,782);
 	allTurrets.push(new globalTurret(50,50,50,50, 50));
 	allEnemies.push(new globalEnemy(50,50,50,50,50));
+	path11();
+	path22();
 	//enemySpawnPlace = path1.copy();
 }
 
