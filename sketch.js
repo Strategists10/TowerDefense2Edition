@@ -26,13 +26,45 @@ var turretObj4;
 var startPoint1 = [14.5*46, 17*46];
 var startPoint2 = [14.5*46, 0];
 var enemySpawnPlace = [];
+// end position
+var endPoint = [4.5 * 46, 0.5 * 46]
 // game level or wave
 var gameLevel = 1;
 //For the path
 var path1 = [];
 var path2 = [];
+var generalPath = [];
+//two timers for waves and in between waves
+var countWaveFrames = 0;
+var isItWave = true;
+var countInBetweenFrames = 0;
+var isItbrake = false;
 
 
+//variables for enemy 1
+function type1(){
+	var speed = 3;
+	var hp = 50;
+	var armor = 0;
+	var money = 15;
+	var type = 1;
+}
+//variables for enemy 2
+function type2(){
+	var speed = 4;
+	var hp = 40;
+	var armor = 20;
+	var money = 20;
+	var type = 2;
+}
+//variables for enemy 3
+function type3(){
+	var speed = 2;
+	var hp = 60;
+	var armor = 40;
+	var money = 30;
+	var type = 3;
+}
 function preload(){
 	//Loading the tiles 
 	for(var k = 1; k < 8; k++){
@@ -88,51 +120,147 @@ function drawMap(){
 		}
 	}
 }
-
 function path11(){
-	path1[0] = createVector(14.5 * 46, 10.5 * 46);
-	path1[1] = createVector(11.5 * 46, 10.5 * 46);
-	path1[2] = createVector(10.5 * 46, 13.5 * 46);
-	path1[3] = createVector(8.5 * 46, 13.5 * 46);
-	path1[4] = createVector(7.5 * 46, 10.5 * 46);
-	path1[5] = createVector(5.5 * 46, 10.5 * 46);
-	path1[6] = createVector(4.5 * 46, 14.5 * 46);
-	path1[7] = createVector(2.5 * 46, 14.5 * 46);
-	path1[8] = createVector(2.5 * 46, 4.5 * 46);
-	path1[9] = createVector(4.5 * 46, 3.5 * 46);
-	path1[10] = createVector(4.5 * 46, 0.5 * 46);
+	path1[1] = createVector(14.5 * 46, 10.5 * 46);
+	path1[2] = createVector(11.5 * 46, 10.5 * 46);
+	path1[3] = createVector(10.5 * 46, 13.5 * 46);
+	path1[4] = createVector(8.5 * 46, 13.5 * 46);
+	path1[5] = createVector(7.5 * 46, 10.5 * 46);
+	path1[6] = createVector(5.5 * 46, 10.5 * 46);
+	path1[7] = createVector(4.5 * 46, 14.5 * 46);
+	path1[8] = createVector(2.5 * 46, 14.5 * 46);
+	path1[9] = createVector(2.5 * 46, 4.5 * 46);
+	path1[10] = createVector(4.5 * 46, 3.5 * 46);
+	path1[11] = createVector(4.5 * 46, 0.5 * 46);
 }
 
 function path22(){
-	path2[0] = createVector(14.5 * 46, 6.5 * 46);
-	path2[1] = createVector(11.5 * 46, 6.5 * 46);
-	path2[2] = createVector(10.5 * 46, 3.5 * 46);
-	path2[3] = createVector(8.5 * 46, 3.5 * 46);
-	path2[4] = createVector(7.5 * 46, 6.5 * 46);
-	path2[5] = createVector(5.5 * 46, 7.5 * 46);
-	path2[6] = createVector(4.5 * 46, 14.5 * 46);
-	path2[7] = createVector(2.5 * 46, 14.5 * 46);
-	path2[8] = createVector(2.5 * 46, 4.5 * 46);
-	path2[9] = createVector(4.5 * 46, 3.5 * 46);
-	path2[10] = createVector(4.5 * 46, 0.5 * 46);
+	path2[1] = createVector(14.5 * 46, 6.5 * 46);
+	path2[2] = createVector(11.5 * 46, 6.5 * 46);
+	path2[3] = createVector(10.5 * 46, 3.5 * 46);
+	path2[4] = createVector(8.5 * 46, 3.5 * 46);
+	path2[5] = createVector(7.5 * 46, 6.5 * 46);
+	path2[6] = createVector(5.5 * 46, 7.5 * 46);
+	path2[7] = createVector(4.5 * 46, 14.5 * 46);
+	path2[8] = createVector(2.5 * 46, 14.5 * 46);
+	path2[9] = createVector(2.5 * 46, 4.5 * 46);
+	path2[10] = createVector(4.5 * 46, 3.5 * 46);
+	path2[11] = createVector(4.5 * 46, 0.5 * 46);
+}
+
+function callEnemiesToMove(){
+	if(allEnemies.length != 0){
+		var newArray = [];
+		var foundFalse = false;
+		for(var i = 0; i < allEnemies.length; i++){
+			if(allEnemies[i].jForCheck === startPoint1[1]){
+				allEnemies[i].walk1();
+			}
+			if(allEnemies[i].jForCheck === startPoint2[1]){
+				allEnemies[i].walk2();
+			}
+			if(allEnemies[i].type === 1){
+				allEnemies[i].display1();
+			}
+			if(allEnemies[i].type === 2){
+				allEnemies[i].display2();
+			}
+			if(allEnemies[i].type === 3){
+				allEnemies[i].display3();
+			}
+			
+			
+			if(allEnemies[i].alive === false){
+				foundFalse = true;
+				var k = 0;
+				for(var j = 0; j < allEnemies.length-1; j++){
+					if(j === i){
+						k++;
+					}
+					newArray[j] = allEnemies[k];
+					k++;
+				}
+			}
+		}
+		if(foundFalse){
+			allEnemies = newArray;
+			foundFalse = false;
+		}
+
+	}
+}
+function createEnemies(){
+	if(countWaveFrames ===0){
+		countWaveFrames = 30 * gameLevel;
+	}
+	
+	if(countWaveFrames % 30 === 0 && countWaveFrames != 0){
+		var limit = 1;
+		if(gameLevel > 3){
+			limit = 2;
+		}
+		if(gameLevel > 7){
+			limit = 3;
+		}
+		var typeNumber = random(0, limit);
+		if(typeNumber < 1){
+			
+			var speed = 3;
+			var hp = 50;
+			var armor = 0;
+			var money = 15;
+			var type = 1;
+		}
+		if(typeNumber > 1 && typeNumber < 2){
+			var speed = 4;
+			var hp = 40;
+			var armor = 20;
+			var money = 20;
+			var type = 2;
+		}
+		if(typeNumber > 2 && typeNumber < 3){
+			var speed = 2;
+			var hp = 60;
+			var armor = 40;
+			var money = 30;
+			var type = 3;
+		}
+
+		allEnemies.push(new globalEnemy(speed, hp, armor, money, type, startPoint1[0], startPoint1[1]));
+		allEnemies.push(new globalEnemy(speed, hp, armor, money, type, startPoint2[0], startPoint2[1]));
+	}
+	countWaveFrames--;
+	if(countWaveFrames === 0){
+		isItWave = false;
+		isItbrake = true;
+	}
+}
+function timeOut(){
+	if(isItbrake){
+		countInBetweenFrames++;
+	}
+	if(countInBetweenFrames === 180 *5){
+		isItbrake = false;
+		gameLevel++;
+		isItWave  = true;
+		countInBetweenFrames = 0;
+	}
 }
 
 
 function setup(){
 	createCanvas(1182,782);
-	allTurrets.push(new globalTurret(50,50,50,50, 50));
-	allEnemies.push(new globalEnemy(50,50,50,50,50));
 	path11();
 	path22();
-	//enemySpawnPlace = path1.copy();
 }
 
 function draw(){
 	background(25);
 	drawMap();
-	
-	allTurrets[0].display();
-	allEnemies[0].display();
-	allEnemies[0].walk();
+	if(isItWave){
+		createEnemies();
+	}
+	timeOut();
+	callEnemiesToMove();
 	
 }
