@@ -230,6 +230,23 @@ function callEnemiesToMove(){
 					newArray[j] = allEnemies[k];
 					k++;
 				}
+
+				
+				for(var g = 0; g < allTurrets.length; g++){
+					var p = 0;
+					var newNewArray = [];
+					for(var h = 0; h < allTurrets[g].targetInRange.length - 1; h++){
+						if(allTurrets[g].targetInRange[h] === i){
+							p++;
+						}
+						newNewArray[h] = allTurrets[g].targetInRange[p]
+
+
+					}
+					allTurrets[g].targetInRange = newNewArray;
+				}
+				
+
 			}
 		}
 		if(foundFalse){
@@ -311,6 +328,7 @@ function draw(){
 	background(25);
 	turretStorage();
 	drawMap();
+	//allTurrets[0].checkTarget();
 	if(isItWave){
 		createEnemies();
 	}

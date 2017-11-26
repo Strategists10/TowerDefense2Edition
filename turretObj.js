@@ -25,7 +25,6 @@ function globalTurret(x, y, damage, cost, area, atkSpeed){
 		
 	}
 	this.checkTarget = function(){
-		print(this.targetInRange.length);
 		if(allEnemies.length != 0){
 			var turretPosition = createVector(this.x, this.y);
 			var dir = turretPosition.copy();
@@ -42,20 +41,20 @@ function globalTurret(x, y, damage, cost, area, atkSpeed){
 					}
 					if(this.OK){
 						this.targetInRange.push(i);
-						
+						print(this.targetInRange.length);
 						
 					}
 					this.OK = true;
 				} 				
 			}
 			if(this.targetInRange.length != 0){
-				for(var j = 0; j < allEnemies.length; j++){
+				for(var j = 0; j < this.targetInRange.length; j++){
 					var checkingRange = createVector(allEnemies[this.targetInRange[j]].x, allEnemies[this.targetInRange[j]].y)
 					if(turretPosition.dist(checkingRange) > this.area){
 						var k = 0;
 						badDist = true;
 						for(var g = 0; g < this.targetInRange.length- 1; g++){
-							if(g === k ){
+							if(g === j ){
 								k++;
 							}
 							newArray[g] = this.targetInRange[k];
