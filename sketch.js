@@ -40,6 +40,10 @@ var isItWave = true;
 var countInBetweenFrames = 0;
 var isItbrake = false;
 
+//for menu side
+var menuSide = 782;
+var gap = 60;
+
 
 //variables for enemy 1
 function type1(){
@@ -148,6 +152,52 @@ function path22(){
 	path2[11] = createVector(4.5 * 46, 0.5 * 46);
 }
 
+function turretStorage(){
+	imageMode(CENTER);
+	image(turret1[0], menuSide + 60, 60);
+	image(turret2[0], menuSide + 60 + gap, 60);
+	image(turret3[0], menuSide + 60 + 2 * gap, 60);
+	image(turret4[0], menuSide + 60 + 3 * gap, 60);
+	if(mouseX > menuSide + 40 && mouseX < menuSide + 80 && mouseY > 40 && mouseY < 80){
+		//draw stats for turet1
+		strokeWeight(5);
+		fill(255);
+		textSize(15);
+		text("Price = 60", menuSide + 40, 100 );
+		text("Damage = 60", menuSide + 40, 120 );
+		text("Area = 60", menuSide + 40, 140 );
+		text("Atack speed = 60", menuSide + 40, 160 );
+	}
+	if(mouseX > menuSide + 40 + gap && mouseX < menuSide + 80 + gap && mouseY > 40 && mouseY < 80){
+		strokeWeight(5);
+		fill(255);
+		textSize(15);
+		text("Price = 60", menuSide + 40 + gap, 100 );
+		text("Damage = 60", menuSide + 40 + gap, 120 );
+		text("Area = 60", menuSide + 40 + gap, 140 );
+		text("Atack speed = 60", menuSide + 40 + gap, 160 );
+	}
+	if(mouseX > menuSide + 40 + 2*gap && mouseX < menuSide + 80 + 2*gap && mouseY > 40 && mouseY < 80){
+		strokeWeight(5);
+		fill(255);
+		textSize(15);
+		text("Price = 60", menuSide + 40 + 2*gap, 100 );
+		text("Damage = 60", menuSide + 40 + 2*gap, 120 );
+		text("Area = 60", menuSide + 40 + 2*gap, 140 );
+		text("Atack speed = 60", menuSide + 40 + 2*gap, 160 );
+	}
+	if(mouseX > menuSide + 40 + 3*gap && mouseX < menuSide + 80 + 3*gap && mouseY > 40 && mouseY < 80){
+		strokeWeight(5);
+		fill(255);
+		textSize(15);
+		text("Price = 60", menuSide + 40 + 2*gap, 100 );
+		text("Damage = 60", menuSide + 40 + 2*gap, 120 );
+		text("Area = 60", menuSide + 40 + 2*gap, 140 );
+		text("Atack speed = 60", menuSide + 40 + 2*gap, 160 );
+	}
+
+}
+
 function callEnemiesToMove(){
 	if(allEnemies.length != 0){
 		var newArray = [];
@@ -212,6 +262,7 @@ function createEnemies(){
 			var type = 1;
 		}
 		if(typeNumber > 1 && typeNumber < 2){
+
 			var speed = 4;
 			var hp = 40;
 			var armor = 20;
@@ -219,6 +270,7 @@ function createEnemies(){
 			var type = 2;
 		}
 		if(typeNumber > 2 && typeNumber < 3){
+
 			var speed = 2;
 			var hp = 60;
 			var armor = 40;
@@ -249,18 +301,24 @@ function timeOut(){
 
 
 function setup(){
-	createCanvas(1182,782);
+	createCanvas(1082,782);
 	path11();
 	path22();
+	allTurrets.push(new globalTurret(150, 300, 60, 60, 200, 30)) ;
 }
 
 function draw(){
 	background(25);
+	turretStorage();
 	drawMap();
 	if(isItWave){
 		createEnemies();
 	}
 	timeOut();
 	callEnemiesToMove();
+	allTurrets[0].display();
+	allTurrets[0].checkTarget();
+	//allTurrets[0].findTarget();
+	//allTurrets[0].shotTarget();
 	
 }

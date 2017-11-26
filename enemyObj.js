@@ -13,6 +13,8 @@ function globalEnemy(speed, hp, armor, money,type,x, y){
 	this.countFrames = 0;
 	this.pathNode = 1;
 	this.type = type;
+	this.threatLevel = 0;
+	this.countThreatFrames = 0;
 	this.display1 = function(){
 		if(this.alive){
 			imageMode(CENTER);
@@ -113,9 +115,10 @@ function globalEnemy(speed, hp, armor, money,type,x, y){
 				this.alive = false;
 			}
 		if(this.pathNode < 12 && this.alive){
+
 			var enemyPosition = createVector(this.x, this.y);
 			var dir = enemyPosition.copy();
-			if(enemyPosition.dist(path1[this.pathNode]) <= this.speed){
+			if(enemyPosition.dist(path1[this.pathNode]) <= this.speed){				 
 				var left = enemyPosition.dist(path1[this.pathNode]);
 				dir.sub(path1[this.pathNode]);
 				dir.normalize();
@@ -134,6 +137,7 @@ function globalEnemy(speed, hp, armor, money,type,x, y){
 				this.y = enemyPosition.y;
 				
 			}
+			this.threatLevel = this.threatLevel + this.speed;
 		}
 	};
 
@@ -163,6 +167,7 @@ function globalEnemy(speed, hp, armor, money,type,x, y){
 				this.y = enemyPosition.y;
 				
 			}
+			this.threatLevel = this.threatLevel + this.speed;
 		}
 	};
 }
