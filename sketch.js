@@ -222,6 +222,9 @@ function callEnemiesToMove(){
 			
 			if(allEnemies[i].alive === false){
 				foundFalse = true;
+
+
+
 				var k = 0;
 				for(var j = 0; j < allEnemies.length-1; j++){
 					if(j === i){
@@ -231,20 +234,24 @@ function callEnemiesToMove(){
 					k++;
 				}
 
-				
+				/*
 				for(var g = 0; g < allTurrets.length; g++){
 					var p = 0;
+					var bug = false;
 					var newNewArray = [];
 					for(var h = 0; h < allTurrets[g].targetInRange.length - 1; h++){
 						if(allTurrets[g].targetInRange[h] === i){
 							p++;
+							bug = true;
 						}
-						newNewArray[h] = allTurrets[g].targetInRange[p]
-
-
+						newNewArray[h] = allTurrets[g].targetInRange[p];
 					}
-					allTurrets[g].targetInRange = newNewArray;
+					if(bug){
+						allTurrets[g].targetInRange = newNewArray;
+					}
+					
 				}
+				*/
 				
 
 			}

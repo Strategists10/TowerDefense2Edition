@@ -47,6 +47,7 @@ function globalTurret(x, y, damage, cost, area, atkSpeed){
 					this.OK = true;
 				} 				
 			}
+			/*
 			if(this.targetInRange.length != 0){
 				for(var j = 0; j < this.targetInRange.length; j++){
 					var checkingRange = createVector(allEnemies[this.targetInRange[j]].x, allEnemies[this.targetInRange[j]].y)
@@ -67,6 +68,7 @@ function globalTurret(x, y, damage, cost, area, atkSpeed){
 					}
 				}
 			}
+			*/
 			
 		}
 	}
